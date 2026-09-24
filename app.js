@@ -304,7 +304,7 @@ const ssave = () => { try { localStorage.setItem(SKEY, JSON.stringify(SS)); } ca
 const bloqueDe = e => { for (const [n, f] of BLOQUES) if (f(e)) return n; return 'Otros'; };
 const BYB = {};
 DATA.forEach(e => { if (!fotos(e).length) return; (BYB[bloqueDe(e)] ||= []).push(e); });
-const soloA = () => $('#st-a').checked;
+const soloA = () => !!$('#st-a')?.checked;
 function especiesBloque(b){
   return (BYB[b] || []).filter(e => !soloA() || e.pri === 'A')
     .sort((x, y) => (x.pri > y.pri) - (x.pri < y.pri) || (y.visu ? 1 : 0) - (x.visu ? 1 : 0) || String(x.familia).localeCompare(String(y.familia), 'es') || x.sci.localeCompare(y.sci, 'es'));
