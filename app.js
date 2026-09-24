@@ -345,8 +345,8 @@ function stHome(){
   $('#st-a').onchange=()=>stHome();
   $('#st-reset').onclick=()=>{if(confirm('¿Borrar TODO tu progreso? (estrellas y aciertos/fallos). No se puede deshacer.')){SS={};ssave();ST={};save();stHome();}};
 }
-$('#st-grid').onclick = ev => { const c = ev.target.closest('.bloque'); if (c) stBlock(c.dataset.b); };
-$('#st-a').onchange = () => { if (!$('#st-block').classList.contains('hidden')) stBlock(CUR.b); else stHome(); };
+$('#st-grid').onclick = ev => { const c = ev.target.closest('.study-block,.bloque'); if (c) stBlock(c.dataset.b); };
+$('#st-a').onchange = () => stHome();
 let CUR = {};
 function stBlock(b){
   CUR = {b};
