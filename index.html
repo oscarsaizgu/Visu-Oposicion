@@ -2,145 +2,124 @@
 <html lang="es">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Visu Oposición · Cantabria</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#214f43">
+<title>VISU · Oposición Biología y Geología · Cantabria</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 <aside class="app-sidebar">
-  <div class="brand"><span class="brand-mark">V</span><div><strong>VISU</strong><small>OPOSICIÓN · CANTABRIA</small></div></div>
-  <div class="nav-label">ESTUDIO</div>
-  <nav id="tabs">
-    <button data-view="estudiar" class="on"><span>01</span><b>Estudiar</b></button>
-    <button data-view="repaso"><span>02</span><b>Repaso</b></button>
-    <button data-view="examen"><span>03</span><b>Examen</b></button>
-    <button data-view="progreso"><span>04</span><b>Progreso</b></button>
-    <button data-view="explorar"><span>05</span><b>Biblioteca</b></button>
+  <a class="brand" href="#" aria-label="VISU">
+    <span class="brand-mark">V</span>
+    <span><strong>VISU</strong><small>OPOSICIÓN · CANTABRIA</small></span>
+  </a>
+  <div class="nav-label">PREPARACIÓN</div>
+  <nav id="tabs" class="main-nav">
+    <button data-view="estudiar" class="on"><span class="nav-num">01</span><span class="nav-copy"><b>Estudiar</b><small>Tu ruta</small></span></button>
+    <button data-view="repaso"><span class="nav-num">02</span><span class="nav-copy"><b>Repaso</b><small>Lo que toca hoy</small></span></button>
+    <button data-view="examen"><span class="nav-num">03</span><span class="nav-copy"><b>Examen</b><small>Simulacro</small></span></button>
+    <button data-view="progreso"><span class="nav-num">04</span><span class="nav-copy"><b>Progreso</b><small>Tu avance</small></span></button>
+    <button data-view="explorar"><span class="nav-num">05</span><span class="nav-copy"><b>Explorar</b><small>Biblioteca</small></span></button>
   </nav>
-  <div class="sidebar-bottom"><span class="status-dot"></span><div><b>Sesión de estudio</b><small>Entrena · reconoce · domina</small></div></div>
+  <div class="sidebar-footer">
+    <span class="footer-dot"></span>
+    <div><b>Sesión de estudio</b><small>Entrena · reconoce · domina</small></div>
+  </div>
 </aside>
-<header class="mobile-top"><div class="brand"><strong>VISU</strong><small>CANTABRIA</small></div></header>
-<nav class="mobile-nav" id="mobile-nav">
-  <button data-view="estudiar" class="on">Estudiar</button><button data-view="repaso">Repaso</button><button data-view="examen">Examen</button><button data-view="progreso">Progreso</button><button data-view="explorar">Biblioteca</button>
+
+<header class="mobile-top">
+  <a class="mobile-brand" href="#"><span class="brand-mark">V</span><span><strong>VISU</strong><small>CANTABRIA</small></span></a>
+</header>
+<nav class="mobile-nav" id="mobile-nav" aria-label="Navegación principal">
+  <button data-view="estudiar" class="on">Estudiar</button>
+  <button data-view="repaso">Repaso</button>
+  <button data-view="examen">Examen</button>
+  <button data-view="progreso">Progreso</button>
+  <button data-view="explorar">Explorar</button>
 </nav>
 
 <section class="filtros" id="filtros">
-  <select id="f-tipo">
-    <option value="">Todo</option>
-    <option value="bio">Seres vivos</option>
-    <option value="mineral">Minerales</option>
-    <option value="roca">Rocas</option>
-    <option value="fosil">Fósiles</option>
-    <option value="micro">Microscopía</option>
-    <option value="geomorf">Geomorfología y otros</option>
+  <div class="filter-title"><span>Biblioteca</span><small>Filtra los ejemplares</small></div>
+  <select id="f-tipo" aria-label="Tipo">
+    <option value="">Todo</option><option value="bio">Seres vivos</option><option value="mineral">Minerales</option>
+    <option value="roca">Rocas</option><option value="fosil">Fósiles</option><option value="micro">Microscopía</option><option value="geomorf">Geomorfología y otros</option>
   </select>
-  <select id="f-grupo"><option value="">Todos los grupos</option></select>
-  <select id="f-pri">
-    <option value="">Prioridad A + B</option>
-    <option value="A">Solo prioridad A</option>
-    <option value="B">Solo prioridad B</option>
-  </select>
+  <select id="f-grupo" aria-label="Grupo"><option value="">Todos los grupos</option></select>
+  <select id="f-pri" aria-label="Prioridad"><option value="">Prioridad A + B</option><option value="A">Solo prioridad A</option><option value="B">Solo prioridad B</option></select>
   <label class="chk"><input type="checkbox" id="f-visu"> Solo salidas en visu</label>
   <label class="chk"><input type="checkbox" id="f-foto" checked> Solo con foto</label>
-  <input type="search" id="f-q" placeholder="Buscar nombre científico o común…">
-  <span id="f-n" class="muted"></span>
+  <label class="search-box"><span>⌕</span><input type="search" id="f-q" placeholder="Buscar especie, familia o grupo…"></label>
+  <span id="f-n" class="filter-count"></span>
 </section>
 
 <main>
-  <!-- EXPLORAR -->
   <section id="v-explorar" class="view">
-    <div class="hint">Pulsa una tarjeta para ver los nombres. <label class="chk"><input type="checkbox" id="x-nombres"> Mostrar siempre los nombres</label></div>
+    <div class="page-heading library-heading">
+      <div><span class="eyebrow">BIBLIOTECA</span><h1>Explorar ejemplares</h1><p>Todo tu material de VISU, cuando quieras buscar algo concreto.</p></div>
+      <label class="reveal-toggle"><input type="checkbox" id="x-nombres"> Mostrar nombres</label>
+    </div>
     <div id="grid" class="grid"></div>
-    <div class="more"><button id="x-more">Cargar más</button></div>
+    <div class="more"><button id="x-more" class="secondary">Cargar más</button></div>
   </section>
 
-  <!-- ESTUDIAR -->
   <section id="v-estudiar" class="view on">
-    <div class="study-commandbar"><div><span class="eyebrow">VISU · CANTABRIA</span><h1>Tu sesión de hoy.</h1><p>Reconoce primero. Escribe después. La repetición hace el resto.</p></div><div class="command-actions"><button class="soft" id="st-daily">Mezcla rápida · 20</button><button class="primary big" id="st-command-continue">Continuar →</button></div></div>
-    <div id="st-home">
-      <div class="st-top"><div><h2 style="margin:0">Estudiar por bloques</h2>
-        <p class="muted small" style="margin:4px 0 0">Elige un bloque. Cada uno está dividido en niveles de 12: primero ves cada ejemplar con su nombre y luego lo escribes tú. Los aciertos y fallos cuentan también para el Repaso y el Progreso.</p></div>
-        <div class="st-ctl"><label class="chk"><input type="checkbox" id="st-a" checked> Solo prioridad A (núcleo Cantabria)</label><button class="link" id="st-reset" style="margin:0">Borrar progreso</button></div></div>
-      <div id="st-grid" class="bloques"></div>
+    <div class="study-commandbar">
+      <div><span class="eyebrow">VISU · CANTABRIA</span><h1>Tu sesión de hoy.</h1><p>Reconoce primero. Escribe después. La repetición hace el resto.</p></div>
+      <div class="command-actions"><button class="secondary" id="st-daily">Mezcla rápida · 20</button><button class="primary big" id="st-command-continue">Continuar →</button></div>
     </div>
-    <div class="study-context hidden" id="study-context"><button class="back-study" id="st-back">← Ruta de estudio</button><span id="study-context-name"></span></div>
+    <div id="st-home"></div>
+    <div class="study-context hidden" id="study-context"><button class="back-study" id="st-back">← Ruta de estudio</button><span class="context-sep">/</span><span id="study-context-name"></span></div>
     <div id="st-block" class="panel hidden"><div class="block-back-spacer"></div><div id="st-block-body"></div></div>
-    <div id="st-play" class="panel hidden"><div class="ex-head"><span id="st-play-title"></span><button class="link" id="st-back2" style="margin:0">Salir</button></div><div id="st-play-body"></div></div>
+    <div id="st-play" class="panel hidden"><div class="ex-head"><span id="st-play-title"></span><button class="link" id="st-back2">Salir</button></div><div id="st-play-body"></div></div>
   </section>
 
-  <!-- EXAMEN -->
   <section id="v-examen" class="view">
-    <div id="ex-setup" class="panel">
-      <h2>Simulacro de visu</h2>
-      <p class="muted">Como en el examen de Cantabria: una foto, un tiempo límite y escribes el nombre científico. Usa los filtros de arriba para elegir de qué grupos salen las preguntas.</p>
-      <div class="row">
-        <label>Nº de ejemplares <input type="number" id="ex-n" value="40" min="5" max="200"></label>
-        <label>Segundos por ejemplar <input type="number" id="ex-t" value="25" min="5" max="120"></label>
-        <label>Modo
-          <select id="ex-modo">
-            <option value="escribir">Escribir el nombre (como el examen)</option>
-            <option value="auto">Autoevaluación (piensas, destapas y marcas)</option>
-          </select>
-        </label>
+    <div id="ex-setup" class="exam-setup">
+      <div class="page-heading"><div><span class="eyebrow">SIMULACRO</span><h1>Cuánto reconoces sin pistas.</h1><p>Pon a prueba tu reconocimiento con una sesión diseñada para parecerse al examen.</p></div><span class="setup-mark">VISU<br><b>01</b></span></div>
+      <div class="setup-grid">
+        <div class="setup-field"><label>Ejemplares</label><input type="number" id="ex-n" value="40" min="5" max="200"><div class="quick-values"><button type="button" data-target="ex-n" data-value="10">10</button><button type="button" data-target="ex-n" data-value="20">20</button><button type="button" data-target="ex-n" data-value="30">30</button><button type="button" data-target="ex-n" data-value="40">40</button></div></div>
+        <div class="setup-field"><label>Tiempo por ejemplar</label><input type="number" id="ex-t" value="25" min="5" max="120"><div class="quick-values"><button type="button" data-target="ex-t" data-value="20">20 s</button><button type="button" data-target="ex-t" data-value="30">30 s</button><button type="button" data-target="ex-t" data-value="45">45 s</button><button type="button" data-target="ex-t" data-value="60">60 s</button></div></div>
+        <div class="setup-field"><label>Modo</label><select id="ex-modo"><option value="escribir">Escribir el nombre</option><option value="auto">Autoevaluación</option></select><small>Escribir reproduce mejor el gesto del examen.</small></div>
       </div>
-      <label class="chk"><input type="checkbox" id="ex-mix" checked> Reparto tipo Cantabria (≈10 % minerales, 5 % rocas, 2,5 % geomorfología, 5 % fósiles, 12,5 % microscopía; el resto seres vivos). Con 40: 4 + 2 + 1 + 2 + 5 + 26.</label>
-      <button class="primary" id="ex-go">Empezar</button>
+      <label class="distribution"><input type="checkbox" id="ex-mix" checked><span><b>Distribución tipo Cantabria</b><small>Minerales 10 % · rocas 5 % · geomorfología 2,5 % · fósiles 5 % · microscopía 12,5 % · resto seres vivos.</small></span></label>
+      <button class="primary launch" id="ex-go">Comenzar simulacro <span>→</span></button>
     </div>
-    <div id="ex-run" class="panel hidden">
-      <div class="ex-head"><span id="ex-count"></span><span id="ex-timer" class="timer"></span></div>
+    <div id="ex-run" class="exam-run panel hidden">
+      <div class="ex-head exam-run-head"><span id="ex-count"></span><span id="ex-timer" class="timer"></span></div>
       <div class="ex-photo"><img id="ex-img" alt=""><div id="ex-nophoto" class="nophoto hidden">Sin foto</div></div>
       <div id="ex-thumbs" class="thumbs"></div>
-      <div id="ex-write">
-        <input id="ex-answer" type="text" autocomplete="off" placeholder="Nombre científico… (Enter para pasar)">
-        <button class="primary" id="ex-next">Siguiente</button>
-      </div>
-      <div id="ex-auto" class="hidden">
-        <button id="ex-reveal">Destapar</button>
-        <div id="ex-sol" class="sol hidden"></div>
-        <div id="ex-mark" class="hidden"><button class="ok" id="ex-ok">Acerté</button><button class="ko" id="ex-ko">Fallé</button></div>
-      </div>
-      <button class="link" id="ex-stop">Terminar ahora</button>
+      <div id="ex-write"><input id="ex-answer" type="text" autocomplete="off" placeholder="Nombre científico… (Enter para pasar)"><button class="primary" id="ex-next">Siguiente</button></div>
+      <div id="ex-auto" class="hidden"><button id="ex-reveal">Destapar</button><div id="ex-sol" class="sol hidden"></div><div id="ex-mark" class="hidden"><button class="ok" id="ex-ok">Acerté</button><button class="ko" id="ex-ko">Fallé</button></div></div>
+      <button class="link exam-stop" id="ex-stop">Terminar ahora</button>
     </div>
-    <div id="ex-res" class="panel hidden"></div>
+    <div id="ex-res" class="exam-result panel hidden"></div>
   </section>
 
-  <!-- REPASO -->
   <section id="v-repaso" class="view">
-    <div class="panel">
-      <h2>Repaso espaciado</h2>
-      <p class="muted">Te enseña primero lo que toca repasar hoy y lo que has fallado. Si aciertas, la especie tarda más en volver (1, 3, 7, 14 y 30 días); si fallas, vuelve mañana. Los filtros de arriba también se aplican aquí.</p>
-      <div id="rp-info"></div>
-      <div id="rp-card" class="hidden">
+    <div class="page-heading review-heading"><div><span class="eyebrow">MEMORIA</span><h1>Repaso de hoy.</h1><p>Vuelve a ver justo lo que necesita otra vuelta.</p></div></div>
+    <div class="review-layout">
+      <div class="review-intro panel"><div class="review-number" id="rp-big">—</div><h2>ejemplares pendientes</h2><div id="rp-info"></div><div class="review-legend"><span><i class="dot red"></i> Necesitan atención</span><span><i class="dot yellow"></i> En proceso</span><span><i class="dot green"></i> Casi dominados</span></div></div>
+      <div id="rp-card" class="review-card panel hidden">
+        <div class="review-card-head"><span>REPASO · 01</span><span class="muted small">Destapa cuando estés listo</span></div>
         <div class="ex-photo"><img id="rp-img" alt=""><div id="rp-nophoto" class="nophoto hidden">Sin foto</div></div>
         <div id="rp-thumbs" class="thumbs"></div>
-        <button id="rp-reveal" class="primary">Destapar</button>
+        <button id="rp-reveal" class="primary review-reveal">Destapar respuesta</button>
         <div id="rp-sol" class="sol hidden"></div>
-        <div id="rp-mark" class="hidden"><button class="ok" id="rp-ok">Acerté</button><button class="ko" id="rp-ko">Fallé</button></div>
+        <div id="rp-mark" class="hidden"><button class="ok" id="rp-ok">La sabía</button><button class="ko" id="rp-ko">Necesito repetirla</button></div>
       </div>
     </div>
   </section>
 
-  <!-- PROGRESO -->
   <section id="v-progreso" class="view">
-    <div class="panel">
-      <h2>Progreso</h2>
-      <div id="pg"></div>
-      <p class="muted small">Tu progreso se guarda en este navegador (en este ordenador). Para no perderlo, exporta de vez en cuando una copia.</p>
-      <div class="row">
-        <button id="pg-export">Exportar progreso</button>
-        <label class="btnlike">Importar progreso <input type="file" id="pg-import" accept=".json" hidden></label>
-        <button id="pg-reset" class="ko">Borrar progreso</button>
-      </div>
-    </div>
+    <div class="page-heading"><div><span class="eyebrow">TU RECORRIDO</span><h1>Cuánto has avanzado.</h1><p>Una vista sencilla de tu dominio, sin convertir el estudio en una hoja de cálculo.</p></div></div>
+    <div class="progress-panel panel"><div id="pg"></div><p class="muted small">Tu progreso se guarda en este navegador. Exporta una copia de vez en cuando para conservarlo.</p><div class="row"><button id="pg-export" class="secondary">Exportar progreso</button><label class="btnlike">Importar progreso <input type="file" id="pg-import" accept=".json" hidden></label><button id="pg-reset" class="ko">Borrar progreso</button></div></div>
   </section>
 </main>
 
-<div id="modal" class="modal hidden">
-  <div class="modal-box">
-    <button class="close" id="m-close">×</button>
-    <div id="m-body"></div>
-  </div>
-</div>
+<div id="modal" class="modal hidden"><div class="modal-box"><button class="close" id="m-close">×</button><div id="m-body"></div></div></div>
 
 <script src="data/especies.js"></script>
 <script src="fotos/manifest.js"></script>
