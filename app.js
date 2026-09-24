@@ -199,6 +199,7 @@ function exEnd(){
     ${EX.ans.map(x => `<tr><td>${fotos(x.e)[0] ? `<img src="${esc(fotos(x.e)[0])}">` : ''}</td><td>${solHTML(x.e)}</td><td>${esc(x.a) || '<span class="muted">—</span>'}</td><td class="${x.r.cls}">${x.r.txt}</td></tr>`).join('')}</table>
     <div class="row"><button class="primary" id="ex-again">Otro simulacro</button><button id="ex-review-errors">Repasar errores →</button><button id="ex-to-study">Volver a estudiar</button></div>`;
   $('#ex-res').classList.remove('hidden');
+  $('#ex-review-errors').classList.toggle('hidden', !LAST_EX_ERRORS.length);
   $('#ex-again').onclick = () => { $('#ex-res').classList.add('hidden'); $('#ex-setup').classList.remove('hidden'); };
   $('#ex-review-errors').onclick = () => {
     const items = LAST_EX_ERRORS.slice();
