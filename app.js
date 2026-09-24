@@ -513,4 +513,17 @@ document.querySelectorAll('.view').forEach(v => v.classList.toggle('on', v.id ==
 $('#filtros').classList.add('hidden');
 stHome();
 refresh();
+/* Navegación móvil: reutiliza exactamente la lógica existente de #tabs. */
+document.querySelectorAll('#mobile-nav button').forEach(m => m.onclick = () => {
+  const target = document.querySelector('#tabs button[data-view="' + m.dataset.view + '"]');
+  if (target) target.click();
+});
+function syncMobileNav(){
+  document.querySelectorAll('#mobile-nav button').forEach(m => m.classList.toggle('on', m.dataset.view === view));
+}
+document.querySelectorAll('#tabs button').forEach(b => {
+  const old = b.onclick;
+  b.onclick = () => { old(); syncMobileNav(); };
+});
+syncMobileNav();
 })();
