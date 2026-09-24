@@ -304,7 +304,7 @@ const ssave = () => { try { localStorage.setItem(SKEY, JSON.stringify(SS)); } ca
 const bloqueDe = e => { for (const [n, f] of BLOQUES) if (f(e)) return n; return 'Otros'; };
 const BYB = {};
 DATA.forEach(e => { if (!fotos(e).length) return; (BYB[bloqueDe(e)] ||= []).push(e); });
-const soloA = () => !!$('#st-a')?.checked;
+const soloA = () => !!($('#st-a') && $('#st-a').checked);
 function especiesBloque(b){
   return (BYB[b] || []).filter(e => !soloA() || e.pri === 'A')
     .sort((x, y) => (x.pri > y.pri) - (x.pri < y.pri) || (y.visu ? 1 : 0) - (x.visu ? 1 : 0) || String(x.familia).localeCompare(String(y.familia), 'es') || x.sci.localeCompare(y.sci, 'es'));
@@ -352,8 +352,6 @@ function stHome(){
   $('#st-a').onchange=()=>stHome();
   $('#st-reset').onclick=()=>{if(confirm('¿Borrar TODO tu progreso? (estrellas y aciertos/fallos). No se puede deshacer.')){SS={};ssave();ST={};save();stHome();}};
 }
-$('#st-grid').onclick = ev => { const c = ev.target.closest('.study-block,.bloque'); if (c) stBlock(c.dataset.b); };
-$('#st-a').onchange = () => stHome();
 let CUR = {};
 function startQuickMix(){
   const eligible = DATA.filter(e => fotos(e).length && (!soloA() || e.pri === 'A'));
@@ -367,10 +365,6 @@ function continueStudy(){
   const first = blocks.find(bl => packs(bl).some((_,i) => (SS[pkey(bl,i)] || {}).wstars < 3));
   stBlock(first || blocks[0]);
 }
-document.addEventListener('click', ev => {
-  if (ev.target.closest('#st-daily')) startQuickMix();
-  if (ev.target.closest('#st-command-continue')) continueStudy();
-});
 function stBlock(b){
   CUR = {b};
   $('#st-home').classList.add('hidden'); $('#st-play').classList.add('hidden'); $('#st-block').classList.remove('hidden');
@@ -398,10 +392,6 @@ function stBlock(b){
   };
 }
 $('#st-back').onclick = stHome;
-$('#st-reset').onclick = () => {
-  if (!confirm('¿Borrar TODO tu progreso? (estrellas de Estudiar y aciertos/fallos del Repaso y Progreso). No se puede deshacer.')) return;
-  SS = {}; ssave(); ST = {}; save(); stHome();
-};
 function playShell(title){
   $('#st-block').classList.add('hidden'); $('#st-play').classList.remove('hidden'); $('#st-play').classList.remove('wide');
   $('#st-play-title').textContent = title;
