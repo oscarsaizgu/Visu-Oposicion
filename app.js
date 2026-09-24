@@ -347,15 +347,30 @@ function stHome(){
     return `<button class="study-block" data-b="${esc(bl)}"><span class="sb-img">${f?'<img loading="lazy" src="'+esc(f)+'" alt="">':''}<span class="sb-index">${String(idx+1).padStart(2,'0')}</span></span><span class="sb-body"><span class="sb-title">${esc(bl)}</span><span class="sb-meta">${L.length} ejemplares · ${P.length} niveles</span><span class="sb-progress"><i style="width:${pct}%"></i></span><span class="sb-foot"><span>${state}</span><span>★ ${stars}</span></span></span></button>`;
   }).join('');
   $('#st-grid').onclick=ev=>{const c=ev.target.closest('.study-block');if(c)stBlock(c.dataset.b);};
-  const first=blocks.find(bl=>packs(bl).some((_,i)=>(SS[pkey(bl,i)]||{}).wstars<3));
-  $('#st-command-continue').onclick=()=>stBlock(first||blocks[0]);
-  $('#st-daily').onclick=()=>{const pool=shuffle(eligible).slice(0,20);CUR={b:'Mezcla rápida'};stGame(pool,null);};
+  $('#st-command-continue').onclick=continueStudy;
+  $('#st-daily').onclick=startQuickMix;
   $('#st-a').onchange=()=>stHome();
   $('#st-reset').onclick=()=>{if(confirm('¿Borrar TODO tu progreso? (estrellas y aciertos/fallos). No se puede deshacer.')){SS={};ssave();ST={};save();stHome();}};
 }
 $('#st-grid').onclick = ev => { const c = ev.target.closest('.study-block,.bloque'); if (c) stBlock(c.dataset.b); };
 $('#st-a').onchange = () => stHome();
 let CUR = {};
+function startQuickMix(){
+  const eligible = DATA.filter(e => fotos(e).length && (!soloA() || e.pri === 'A'));
+  if (!eligible.length) { alertMsg('No hay ejemplares con foto para mezclar.'); return; }
+  CUR = {b:'Mezcla rápida'};
+  stGame(shuffle(eligible.slice()).slice(0, 20), null);
+}
+function continueStudy(){
+  const blocks = BLOQUES.map(x=>x[0]).concat(['Otros']).filter(b=>especiesBloque(b).length);
+  if (!blocks.length) { alertMsg('No hay bloques de estudio disponibles.'); return; }
+  const first = blocks.find(bl => packs(bl).some((_,i) => (SS[pkey(bl,i)] || {}).wstars < 3));
+  stBlock(first || blocks[0]);
+}
+document.addEventListener('click', ev => {
+  if (ev.target.closest('#st-daily')) startQuickMix();
+  if (ev.target.closest('#st-command-continue')) continueStudy();
+});
 function stBlock(b){
   CUR = {b};
   $('#st-home').classList.add('hidden'); $('#st-play').classList.add('hidden'); $('#st-block').classList.remove('hidden');
