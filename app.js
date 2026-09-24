@@ -37,7 +37,7 @@ function filtered(){
 function refresh(){ const n = filtered().length; $('#f-n').textContent = n + ' ejemplares'; if (view === 'explorar') renderGrid(true); if (view === 'repaso') rpNext(); }
 
 /* ---------- vistas ---------- */
-let view = 'explorar';
+let view = 'estudiar';
 document.querySelectorAll('#tabs button').forEach(b => b.onclick = () => {
   document.querySelectorAll('#tabs button').forEach(x => x.classList.toggle('on', x === b));
   view = b.dataset.view;
@@ -498,5 +498,7 @@ document.addEventListener('keydown', ev => { if (view === 'estudiar' && CUR.keys
 
 /* ---------- arranque ---------- */
 if (!Object.keys(FOTOS).length) { $('#f-foto').checked = false; }
+$('#filtros').classList.add('hidden');
+stHome();
 refresh();
 })();
