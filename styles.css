@@ -133,3 +133,12 @@ main{margin-left:var(--sidebar);padding:42px clamp(26px,4vw,66px) 80px;max-width
 .achievement>b{font-family:"Manrope";font-size:12px;color:var(--ochre)}
 .achievement strong{display:block;font-size:12px}.achievement small{display:block;color:var(--muted);font-size:10px;margin-top:2px}
 @media(max-width:820px){.achievement-list{grid-template-columns:1fr}}
+
+
+/* botones de salida de estudio */
+.study-close{position:absolute;top:13px;right:15px;width:34px;height:34px;border:0;border-radius:50%;background:transparent;color:var(--muted);font-size:27px;line-height:1;display:grid;place-items:center;padding:0;transition:.18s ease;z-index:2}
+.study-close:hover{background:var(--sage-2);color:var(--forest);transform:rotate(90deg)}
+#st-block,#st-play{position:relative}
+#st-block-body,#st-play-body{padding-top:6px}
+.study-context{margin-bottom:10px}
+@media(max-width:520px){.study-close{top:10px;right:10px;width:32px;height:32px;font-size:25px}}
