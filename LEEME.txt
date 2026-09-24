@@ -1,0 +1,39 @@
+VISU CANTABRIA — app de estudio (uso personal)
+================================================
+
+CÓMO ABRIRLA
+1. Descomprime "visu-cantabria.zip" donde quieras (por ejemplo, en tu carpeta del repo).
+2. Descomprime "fotos-visu.zip" (lo descarga tu Chrome) DENTRO de la carpeta visu-cantabria.
+   Te preguntará si quieres reemplazar "fotos/manifest.js": dile que SÍ.
+   Debe quedar así:
+      visu-cantabria/
+        index.html
+        app.js
+        styles.css
+        data/especies.js
+        fotos/manifest.js
+        fotos/alnus-glutinosa_1.webp   (y ~4.000 fotos más)
+3. Doble clic en index.html. Se abre en el navegador. No necesita internet ni servidor.
+
+QUÉ HAY
+- Explorar: tarjetas con foto; pulsa para ver el nombre, vuelve a pulsar para la ficha completa.
+- Examen: simulacro tipo Cantabria (40 ejemplares, 25 s cada uno, escribes el nombre científico).
+  Corrección orientativa: completo = 1; solo género = 0,5; se perdona una errata.
+- Repaso: repetición espaciada (1, 3, 7, 14, 30 días). Atajos: espacio = destapar, → acerté, ← fallé.
+- Progreso: aciertos por grupo. El progreso se guarda en el navegador: exporta una copia de vez en cuando.
+
+GIT / GITHUB (repo privado)
+- Puedes subir la carpeta tal cual. Las fotos son de asturnatura.com (© sus autores): repo PRIVADO y solo para uso personal.
+- Ocupa unos 200-300 MB. Si GitHub se queja, añade "fotos/" al .gitignore y guarda las fotos solo en tu ordenador.
+
+DATOS
+- data/especies.js: 1.678 especies del "núcleo Cantabria" (ver visu_nucleo_cantabria.xlsx para el criterio).
+- data/extra.js: 351 ejemplares de geología y microscopía (94 minerales, 61 rocas, 72 fósiles, 124 microscopía).
+  Detalle y criterio en ../visu_geologia_microscopia.xlsx.
+- fotos/geo/ + fotos/extra-manifest.js: fotos de esos ejemplares, sacadas del banco local MaterialVinted.
+  Si cambias fotos_jobs.json, vuelve a generarlas con:  python3 convert_fotos.py "<ruta a OPOS BIOLOGIA 2027>"
+- Filtro "Tipo" arriba (seres vivos / minerales / rocas / fósiles / microscopía).
+- Examen: casilla "Reparto tipo Cantabria" (con 40: 26 seres vivos + 4 minerales + 3 rocas + 2 fósiles + 5 microscopía).
+- En geología/microscopía la respuesta se corrige contra el nombre y sus sinónimos aceptados; si falta la variedad
+  (p. ej. "cuarzo" para "cuarzo ahumado") cuenta 0,5.
+- Copias de la versión anterior: app.v1-backup.js e index.v1-backup.html.
