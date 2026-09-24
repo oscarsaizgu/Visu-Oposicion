@@ -349,7 +349,7 @@ function stHome(){
   $('#st-grid').onclick=ev=>{const c=ev.target.closest('.study-block');if(c)stBlock(c.dataset.b);};
   const first=blocks.find(bl=>packs(bl).some((_,i)=>(SS[pkey(bl,i)]||{}).wstars<3));
   $('#st-command-continue').onclick=()=>stBlock(first||blocks[0]);
-  $('#st-daily').onclick=()=>{const pool=shuffle(eligible).slice(0,20);stGame(pool,null);};
+  $('#st-daily').onclick=()=>{const pool=shuffle(eligible).slice(0,20);CUR={b:'Mezcla rápida'};stGame(pool,null);};
   $('#st-a').onchange=()=>stHome();
   $('#st-reset').onclick=()=>{if(confirm('¿Borrar TODO tu progreso? (estrellas y aciertos/fallos). No se puede deshacer.')){SS={};ssave();ST={};save();stHome();}};
 }
@@ -431,7 +431,8 @@ function stLearn(p, i){
 }
 /* jugar: 4 opciones */
 function opciones(e){
-  const pool = (BYB[CUR.b] || []).filter(x => x.id !== e.id && x.sci !== e.sci);
+  const source = (BYB[CUR.b] && BYB[CUR.b].length) ? BYB[CUR.b] : DATA;
+  const pool = source.filter(x => x.id !== e.id && x.sci !== e.sci && fotos(x).length);
   const fam = shuffle(pool.filter(x => x.familia && x.familia === e.familia)).slice(0, 2);
   const gen = shuffle(pool.filter(x => x.sci.split(' ')[0] === e.sci.split(' ')[0] && !fam.includes(x))).slice(0, 1);
   const rest = shuffle(pool.filter(x => !fam.includes(x) && !gen.includes(x)));
