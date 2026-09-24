@@ -138,7 +138,7 @@ function check(answer, e){
 }
 
 /* ---------- examen ---------- */
-let EX = null;
+let EX = null, LAST_EX_ERRORS = [];
 const shuffle = a => { for (let i = a.length - 1; i > 0; i--) { const j = Math.random() * (i + 1) | 0; [a[i], a[j]] = [a[j], a[i]]; } return a; };
 document.querySelectorAll('.quick-values button').forEach(btn=>btn.onclick=()=>{const input=$('#'+btn.dataset.target);if(input){input.value=btn.dataset.value;input.dispatchEvent(new Event('change'));}});
 $('#ex-go').onclick = () => {
@@ -190,15 +190,22 @@ $('#ex-ko').onclick = () => exMark(false);
 $('#ex-stop').onclick = () => { if (EX) { clearInterval(EX.timer); exEnd(); } };
 function exEnd(){
   clearInterval(EX.timer);
+  LAST_EX_ERRORS = EX.ans.filter(x => x.r.pts < 1).map(x => x.e);
   const tot = EX.ans.reduce((s,x) => s + x.r.pts, 0), n = EX.ans.length || 1;
   $('#ex-run').classList.add('hidden');
   $('#ex-res').innerHTML = `<h2>Resultado</h2><div class="score">${tot.toLocaleString('es')} / ${EX.ans.length} <span class="muted small">(${Math.round(100*tot/n)} %)</span></div>
     <p class="muted small">Criterio de corrección orientativo: nombre científico completo = 1; solo género = 0,5. El tribunal puede ser más estricto.</p>
     <table class="res"><tr><th></th><th>Solución</th><th>Tu respuesta</th><th></th></tr>
     ${EX.ans.map(x => `<tr><td>${fotos(x.e)[0] ? `<img src="${esc(fotos(x.e)[0])}">` : ''}</td><td>${solHTML(x.e)}</td><td>${esc(x.a) || '<span class="muted">—</span>'}</td><td class="${x.r.cls}">${x.r.txt}</td></tr>`).join('')}</table>
-    <div class="row"><button class="primary" id="ex-again">Otro simulacro</button></div>`;
+    <div class="row"><button class="primary" id="ex-again">Otro simulacro</button><button id="ex-review-errors">Repasar errores →</button><button id="ex-to-study">Volver a estudiar</button></div>`;
   $('#ex-res').classList.remove('hidden');
   $('#ex-again').onclick = () => { $('#ex-res').classList.add('hidden'); $('#ex-setup').classList.remove('hidden'); };
+  $('#ex-review-errors').onclick = () => {
+    const items = LAST_EX_ERRORS.slice();
+    document.querySelector('#tabs button[data-view="estudiar"]').click();
+    setTimeout(() => { CUR = {b:'Repaso del simulacro'}; stLearn(items,null); }, 0);
+  };
+  $('#ex-to-study').onclick = () => document.querySelector('#tabs button[data-view="estudiar"]').click();
   EX = null;
 }
 
