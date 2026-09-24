@@ -498,6 +498,10 @@ document.addEventListener('keydown', ev => { if (view === 'estudiar' && CUR.keys
 
 /* ---------- arranque ---------- */
 if (!Object.keys(FOTOS).length) { $('#f-foto').checked = false; }
+/* Estado inicial explícito: entrar siempre directamente en Estudiar. */
+view = 'estudiar';
+document.querySelectorAll('#tabs button').forEach(b => b.classList.toggle('on', b.dataset.view === 'estudiar'));
+document.querySelectorAll('.view').forEach(v => v.classList.toggle('on', v.id === 'v-estudiar'));
 $('#filtros').classList.add('hidden');
 stHome();
 refresh();
