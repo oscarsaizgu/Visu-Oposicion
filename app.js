@@ -140,6 +140,7 @@ function check(answer, e){
 /* ---------- examen ---------- */
 let EX = null;
 const shuffle = a => { for (let i = a.length - 1; i > 0; i--) { const j = Math.random() * (i + 1) | 0; [a[i], a[j]] = [a[j], a[i]]; } return a; };
+document.querySelectorAll('.quick-values button').forEach(btn=>btn.onclick=()=>{const input=$('#'+btn.dataset.target);if(input){input.value=btn.dataset.value;input.dispatchEvent(new Event('change'));}});
 $('#ex-go').onclick = () => {
   const pool = filtered();
   if (!pool.length) { alertMsg('No hay ejemplares con esos filtros.'); return; }
@@ -208,6 +209,7 @@ function rpNext(){
   const due = pool.filter(e => ST[e.id] && ST[e.id].due <= now).sort((a,b) => ST[a.id].box - ST[b.id].box || ST[a.id].due - ST[b.id].due);
   const nuevos = pool.filter(e => !ST[e.id]).sort((a,b) => (a.pri > b.pri) - (a.pri < b.pri) || (b.visu ? 1 : 0) - (a.visu ? 1 : 0));
   $('#rp-info').innerHTML = `<p><b>${due.length}</b> para repasar hoy · <b>${nuevos.length}</b> sin ver todavía</p>`;
+  if ($('#rp-big')) $('#rp-big').textContent = due.length.toLocaleString('es-ES');
   RP = due[0] || nuevos[0] || null;
   $('#rp-card').classList.toggle('hidden', !RP);
   if (!RP) { $('#rp-info').insertAdjacentHTML('beforeend', '<p>¡Nada pendiente con estos filtros! Vuelve mañana o cambia los filtros.</p>'); return; }
@@ -226,13 +228,29 @@ document.addEventListener('keydown', ev => {
 
 /* ---------- progreso ---------- */
 function renderPg(){
-  const by = {};
-  DATA.forEach(e => { const g = (by[e.grupo] ||= {n:0, vistos:0, dom:0}); g.n++; const s = ST[e.id]; if (s) { g.vistos++; if (s.box >= 3) g.dom++; } });
-  const tot = Object.values(by).reduce((a,g) => ({n:a.n+g.n, vistos:a.vistos+g.vistos, dom:a.dom+g.dom}), {n:0, vistos:0, dom:0});
-  const rowH = (name, g) => `<tr><td>${esc(name)}</td><td>${g.n}</td><td>${g.vistos}</td><td>${g.dom}</td><td><div class="bar"><div style="width:${g.n ? 100*g.dom/g.n : 0}%"></div></div></td></tr>`;
-  $('#pg').innerHTML = `<p class="muted small">"Dominadas" = acertadas varias veces seguidas (caja 3 o más del repaso espaciado).</p>
-    <table class="pg"><tr><th>Grupo</th><th>Total</th><th>Vistas</th><th>Dominadas</th><th></th></tr>
-    ${rowH('TOTAL', tot)}${Object.keys(by).sort((a,b)=>a.localeCompare(b,'es')).map(k => rowH(k, by[k])).join('')}</table>`;
+  const by={};
+  DATA.forEach(e=>{const g=(by[e.grupo] ||= {n:0,vistos:0,dom:0});g.n++;const s=ST[e.id];if(s){g.vistos++;if(s.box>=3)g.dom++;}});
+  const rows=Object.entries(by).sort((a,b)=>b[1].dom/a[1].n-a[1].dom/b[1].n);
+  const tot=Object.values(by).reduce((a,g)=>({n:a.n,vistos:a.vistos,dom:a.dom}),{n:0,vistos:0,dom:0});
+  Object.values(by).forEach(g=>{tot.n+=g.n;tot.vistos+=g.vistos;tot.dom+=g.dom;});
+  const due=DATA.filter(e=>ST[e.id]&&ST[e.id].due<=Date.now()).length;
+  const pct=n=>tot.n?Math.round(n/tot.n*100):0;
+  const completedBlocks=BLOQUES.map(x=>x[0]).filter(b=>{const L=especiesBloque(b);return L.length&&L.every(dominada);}).length;
+  const firstLevel=Object.values(SS).some(s=>s.wstars>=1||s.stars>=1);
+  $('#pg').innerHTML=`<div class="pg-summary">
+    <div class="pg-stat"><b>${tot.dom}</b><span>dominados</span></div>
+    <div class="pg-stat"><b>${tot.vistos}</b><span>en proceso</span></div>
+    <div class="pg-stat"><b>${Math.max(0,tot.n-tot.vistos)}</b><span>pendientes</span></div>
+    <div class="pg-stat"><b>${due}</b><span>para repasar hoy</span></div>
+  </div>
+  <div class="pg-section-title">Dominio por grupos</div>
+  <div class="pg-bars">${rows.map(([name,g])=>{const p=g.n?Math.round(g.dom/g.n*100):0;return `<div class="pg-bar-row"><span>${esc(name)}</span><span class="pg-bar"><i style="width:${p}%"></i></span><span class="pg-pct">${p}%</span></div>`;}).join('')}</div>
+  <div class="pg-section-title">Pequeños hitos</div>
+  <div class="achievement-list">
+    <span class="achievement ${firstLevel?'earned':''}"><b>01</b><span><strong>Primer nivel</strong><small>${firstLevel?'Ya has superado un nivel.':'Supera tu primer nivel de estudio.'}</small></span></span>
+    <span class="achievement ${tot.dom>=100?'earned':''}"><b>02</b><span><strong>100 dominados</strong><small>${tot.dom>=100?'Objetivo conseguido.':(100-tot.dom)+' ejemplares para llegar.'}</small></span></span>
+    <span class="achievement ${completedBlocks>0?'earned':''}"><b>03</b><span><strong>Bloque completo</strong><small>${completedBlocks?'Ya has cerrado '+completedBlocks+' bloque(s).':'Domina todos los ejemplares de un bloque.'}</small></span></span>
+  </div>`;
 }
 $('#pg-export').onclick = () => {
   const blob = new Blob([JSON.stringify(ST)], {type:'application/json'});
