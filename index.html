@@ -3,15 +3,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Visu Cantabria</title>
+<title>Visu Oposición · Cantabria</title>
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 <header class="top">
   <div class="brand">Visu <span>Cantabria</span></div>
   <nav id="tabs">
-    <button data-view="explorar" class="on">Explorar</button>
-    <button data-view="estudiar">Estudiar</button>
+    <button data-view="explorar">Explorar</button>
+    <button data-view="estudiar" class="on">Estudiar</button>
     <button data-view="examen">Examen</button>
     <button data-view="repaso">Repaso</button>
     <button data-view="progreso">Progreso</button>
@@ -42,14 +42,14 @@
 
 <main>
   <!-- EXPLORAR -->
-  <section id="v-explorar" class="view on">
+  <section id="v-explorar" class="view">
     <div class="hint">Pulsa una tarjeta para ver los nombres. <label class="chk"><input type="checkbox" id="x-nombres"> Mostrar siempre los nombres</label></div>
     <div id="grid" class="grid"></div>
     <div class="more"><button id="x-more">Cargar más</button></div>
   </section>
 
   <!-- ESTUDIAR -->
-  <section id="v-estudiar" class="view">
+  <section id="v-estudiar" class="view on">
     <div id="st-home">
       <div class="st-top"><div><h2 style="margin:0">Estudiar por bloques</h2>
         <p class="muted small" style="margin:4px 0 0">Elige un bloque. Cada uno está dividido en niveles de 12: primero ves cada ejemplar con su nombre y luego lo escribes tú. Los aciertos y fallos cuentan también para el Repaso y el Progreso.</p></div>
