@@ -7,16 +7,31 @@
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<header class="top">
-  <div class="brand">Visu <span>Cantabria</span></div>
+<aside class="app-sidebar">
+  <div class="brand"><strong>VISU</strong><span>OPOSICIÓN</span><small>CANTABRIA · BIOLOGÍA Y GEOLOGÍA</small></div>
+  <div class="nav-label">APRENDER</div>
   <nav id="tabs">
-    <button data-view="explorar">Explorar</button>
-    <button data-view="estudiar" class="on">Estudiar</button>
-    <button data-view="examen">Examen</button>
-    <button data-view="repaso">Repaso</button>
-    <button data-view="progreso">Progreso</button>
+    <button data-view="estudiar" class="on"><span>◉</span><b>Estudiar</b></button>
+    <button data-view="repaso"><span>↻</span><b>Repaso</b></button>
+    <button data-view="examen"><span>△</span><b>Examen</b></button>
+    <button data-view="progreso"><span>↗</span><b>Progreso</b></button>
+    <button data-view="explorar"><span>⌕</span><b>Explorar</b></button>
   </nav>
+  <div class="sidebar-foot">
+    <div class="sidebar-note"><span>●</span><div><b>Tu ritmo</b><small>Un poco cada día.</small></div></div>
+    <div class="sidebar-caption">Visu Oposición<br>Tu herramienta de estudio</div>
+  </div>
+</aside>
+<header class="mobile-top">
+  <div class="brand"><strong>VISU</strong><span>OPOSICIÓN</span></div>
 </header>
+<nav class="mobile-nav" id="mobile-nav">
+  <button data-view="estudiar" class="on">Estudiar</button>
+  <button data-view="repaso">Repaso</button>
+  <button data-view="examen">Examen</button>
+  <button data-view="progreso">Progreso</button>
+  <button data-view="explorar">Explorar</button>
+</nav>
 
 <section class="filtros" id="filtros">
   <select id="f-tipo">
