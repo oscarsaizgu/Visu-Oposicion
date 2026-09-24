@@ -8,29 +8,20 @@
 </head>
 <body>
 <aside class="app-sidebar">
-  <div class="brand"><strong>VISU</strong><span>OPOSICIÓN</span><small>CANTABRIA · BIOLOGÍA Y GEOLOGÍA</small></div>
-  <div class="nav-label">APRENDER</div>
+  <div class="brand"><span class="brand-mark">V</span><div><strong>VISU</strong><small>OPOSICIÓN · CANTABRIA</small></div></div>
+  <div class="nav-label">ESTUDIO</div>
   <nav id="tabs">
-    <button data-view="estudiar" class="on"><span>◉</span><b>Estudiar</b></button>
-    <button data-view="repaso"><span>↻</span><b>Repaso</b></button>
-    <button data-view="examen"><span>△</span><b>Examen</b></button>
-    <button data-view="progreso"><span>↗</span><b>Progreso</b></button>
-    <button data-view="explorar"><span>⌕</span><b>Explorar</b></button>
+    <button data-view="estudiar" class="on"><span>01</span><b>Estudiar</b></button>
+    <button data-view="repaso"><span>02</span><b>Repaso</b></button>
+    <button data-view="examen"><span>03</span><b>Examen</b></button>
+    <button data-view="progreso"><span>04</span><b>Progreso</b></button>
+    <button data-view="explorar"><span>05</span><b>Biblioteca</b></button>
   </nav>
-  <div class="sidebar-foot">
-    <div class="sidebar-note"><span>●</span><div><b>Tu ritmo</b><small>Un poco cada día.</small></div></div>
-    <div class="sidebar-caption">Visu Oposición<br>Tu herramienta de estudio</div>
-  </div>
+  <div class="sidebar-bottom"><span class="status-dot"></span><div><b>Sesión de estudio</b><small>Entrena · reconoce · domina</small></div></div>
 </aside>
-<header class="mobile-top">
-  <div class="brand"><strong>VISU</strong><span>OPOSICIÓN</span></div>
-</header>
+<header class="mobile-top"><div class="brand"><strong>VISU</strong><small>CANTABRIA</small></div></header>
 <nav class="mobile-nav" id="mobile-nav">
-  <button data-view="estudiar" class="on">Estudiar</button>
-  <button data-view="repaso">Repaso</button>
-  <button data-view="examen">Examen</button>
-  <button data-view="progreso">Progreso</button>
-  <button data-view="explorar">Explorar</button>
+  <button data-view="estudiar" class="on">Estudiar</button><button data-view="repaso">Repaso</button><button data-view="examen">Examen</button><button data-view="progreso">Progreso</button><button data-view="explorar">Biblioteca</button>
 </nav>
 
 <section class="filtros" id="filtros">
@@ -65,13 +56,15 @@
 
   <!-- ESTUDIAR -->
   <section id="v-estudiar" class="view on">
+    <div class="study-commandbar"><div><span class="eyebrow">VISU · CANTABRIA</span><h1>Tu sesión de hoy.</h1><p>Reconoce primero. Escribe después. La repetición hace el resto.</p></div><div class="command-actions"><button class="soft" id="st-daily">Mezcla rápida · 20</button><button class="primary big" id="st-command-continue">Continuar →</button></div></div>
     <div id="st-home">
       <div class="st-top"><div><h2 style="margin:0">Estudiar por bloques</h2>
         <p class="muted small" style="margin:4px 0 0">Elige un bloque. Cada uno está dividido en niveles de 12: primero ves cada ejemplar con su nombre y luego lo escribes tú. Los aciertos y fallos cuentan también para el Repaso y el Progreso.</p></div>
         <div class="st-ctl"><label class="chk"><input type="checkbox" id="st-a" checked> Solo prioridad A (núcleo Cantabria)</label><button class="link" id="st-reset" style="margin:0">Borrar progreso</button></div></div>
       <div id="st-grid" class="bloques"></div>
     </div>
-    <div id="st-block" class="panel hidden"><button class="link" id="st-back" style="margin:0 0 8px">← Todos los bloques</button><div id="st-block-body"></div></div>
+    <div class="study-context hidden" id="study-context"><button class="back-study" id="st-back">← Ruta de estudio</button><span id="study-context-name"></span></div>
+    <div id="st-block" class="panel hidden"><div class="block-back-spacer"></div><div id="st-block-body"></div></div>
     <div id="st-play" class="panel hidden"><div class="ex-head"><span id="st-play-title"></span><button class="link" id="st-back2" style="margin:0">Salir</button></div><div id="st-play-body"></div></div>
   </section>
 
