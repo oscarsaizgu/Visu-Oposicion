@@ -142,3 +142,10 @@ main{margin-left:var(--sidebar);padding:42px clamp(26px,4vw,66px) 80px;max-width
 #st-block-body,#st-play-body{padding-top:6px}
 .study-context{margin-bottom:10px}
 @media(max-width:520px){.study-close{top:10px;right:10px;width:32px;height:32px;font-size:25px}}
+
+
+/* contraste de pistas y feedback */
+.st-fb.ok{color:var(--forest);background:var(--ok-bg);border-left:3px solid var(--ok)}
+.st-fb.ko{color:var(--ko);background:var(--ko-bg);border-left:3px solid var(--ko)}
+.st-fb.ok b,.st-fb.ok i,.st-fb.ko b,.st-fb.ko i,.st-fb.ko .muted,.st-fb.ok .muted{color:inherit}
+.st-hint{color:var(--forest);background:var(--sage-2);border-radius:9px;padding:8px 10px}
