@@ -288,12 +288,14 @@ const pkey = (b, i) => (soloA() ? 'A|' : 'T|') + b + '|' + i;
 const dominada = e => ST[e.id] && ST[e.id].box >= 3;
 const starsHTML = n => '<span class="stars">' + '★'.repeat(n) + '<span class="off">' + '★'.repeat(3 - n) + '</span></span>';
 function stHome(){
-  $('#st-home').classList.remove('hidden'); $('#st-block').classList.add('hidden'); $('#st-play').classList.add('hidden');
+  $('#st-home').classList.remove('hidden'); $('#st-block').classList.add('hidden'); $('#st-play').classList.add('hidden'); $('#study-context').classList.add('hidden');
   const blocks=BLOQUES.map(x=>x[0]).concat(['Otros']).filter(b=>especiesBloque(b).length);
   const total=blocks.reduce((s,b)=>s+especiesBloque(b).length,0);
   const mastered=DATA.filter(e=>fotos(e).length&&(!soloA()||e.pri==='A')&&dominada(e)).length;
   const due=DATA.filter(e=>fotos(e).length&&(!soloA()||e.pri==='A')&&ST[e.id]&&ST[e.id].ko).length;
-  let html='<div class="study-hero"><div><div class="eyebrow">VISU · CANTABRIA</div><h1>Hoy toca reconocer.<br><em>Sin agobios.</em></h1><p>Entrena por bloques y ve avanzando a tu ritmo. Primero reconoces, después eliges y al final escribes como en el examen.</p><div class="hero-actions"><button class="primary big" id="st-quick">▶ Continuar estudiando</button><button id="st-mix">Mezcla rápida · 20</button></div></div><div class="study-orbit"><div class="orbit-card"><span class="orbit-num">'+mastered+'</span><span>dominadas</span></div><div class="orbit-ring"><span>VISU</span></div></div></div>';
+  const reviewed=DATA.filter(e=>ST[e.id]&&ST[e.id].seen).length;
+  const masteredPct=total?Math.round(mastered/total*100):0;
+  let html='<div class="study-overview"><div class="overview-main"><span class="eyebrow">TU RUTA DE ESTUDIO</span><h2>Elige dónde quieres avanzar.</h2><p>'+reviewed.toLocaleString('es-ES')+' ejemplares practicados · '+masteredPct+'% de este recorrido dominado</p></div><div class="overview-stat"><strong>'+mastered+'</strong><span>dominadas</span></div><div class="overview-stat"><strong>'+due+'</strong><span>para repasar</span></div></div><div class="study-hero"><div><div class="eyebrow">VISU · CANTABRIA</div><h1>Hoy toca reconocer.<br><em>Sin agobios.</em></h1><p>Entrena por bloques y ve avanzando a tu ritmo. Primero reconoces, después eliges y al final escribes como en el examen.</p><div class="hero-actions"><button class="primary big" id="st-quick">▶ Continuar estudiando</button><button id="st-mix">Mezcla rápida · 20</button></div></div><div class="study-orbit"><div class="orbit-card"><span class="orbit-num">'+mastered+'</span><span>dominadas</span></div><div class="orbit-ring"><span>VISU</span></div></div></div>';
   html+='<div class="study-strip"><div><b>'+total.toLocaleString('es-ES')+'</b><span>ejemplares</span></div><div><b>'+blocks.length+'</b><span>bloques</span></div><div><b>'+due+'</b><span>para repasar</span></div><label class="study-toggle"><input type="checkbox" id="st-a" '+(soloA()?'checked':'')+'> Solo prioridad A</label><button class="link" id="st-reset">Borrar progreso</button></div>';
   html+='<div class="section-head"><div><span class="eyebrow">TU RECORRIDO</span><h2>Elige por dónde seguir</h2></div><span class="muted small">Los bloques se adaptan a tu progreso</span></div><div id="st-grid" class="study-map"></div><div class="study-tip"><span>💡</span><div><b>Cómo estudiar aquí</b><br><span class="muted">Haz un bloque → nivel → <b>Estudiar</b>. La web vuelve a enseñarte lo que fallas.</span></div></div>';
   $('#st-home').innerHTML=html;
@@ -302,6 +304,8 @@ function stHome(){
     return '<button class="study-block" data-b="'+esc(bl)+'"><span class="sb-img">'+(f?'<img loading="lazy" src="'+esc(f)+'" alt="">':'')+'<span class="sb-index">'+String(idx+1).padStart(2,'0')+'</span></span><span class="sb-body"><span class="sb-title">'+esc(bl)+'</span><span class="sb-meta">'+L.length+' ejemplares · '+P.length+' niveles</span><span class="sb-progress"><i style="width:'+pct+'%"></i></span><span class="sb-foot"><span>'+state+'</span><span>★ '+stars+'</span></span></span></button>';
   }).join('');
   $('#st-grid').onclick=ev=>{const c=ev.target.closest('.study-block');if(c)stBlock(c.dataset.b);};
+  $('#st-command-continue').onclick=()=>$('#st-quick').click();
+  $('#st-daily').onclick=()=>$('#st-mix').click();
   $('#st-a').onchange=()=>{if(!$('#st-block').classList.contains('hidden'))stBlock(CUR.b);else stHome();};
   $('#st-reset').onclick=()=>{if(confirm('¿Borrar TODO tu progreso? (estrellas y aciertos/fallos). No se puede deshacer.')){SS={};ssave();ST={};save();stHome();}};
   $('#st-quick').onclick=()=>{const first=blocks.find(bl=>packs(bl).some((_,i)=>(SS[pkey(bl,i)]||{}).wstars<3));stBlock(first||blocks[0]);};
@@ -313,6 +317,7 @@ let CUR = {};
 function stBlock(b){
   CUR = {b};
   $('#st-home').classList.add('hidden'); $('#st-play').classList.add('hidden'); $('#st-block').classList.remove('hidden');
+  $('#study-context').classList.remove('hidden'); $('#study-context-name').textContent=b;
   const P = packs(b), L = especiesBloque(b);
   const fallos = L.filter(e => ST[e.id] && ST[e.id].box <= 1 && ST[e.id].ko);
   $('#st-block-body').innerHTML = `<h2>${esc(b)}</h2>
